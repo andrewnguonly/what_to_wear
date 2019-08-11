@@ -3,7 +3,7 @@ import random
 from datetime import datetime, timedelta
 
 import firebase_admin
-from firebase_admin import firestore
+from firebase_admin import firestore as fs
 from twilio.rest import Client as TwilioClient
 
 
@@ -21,7 +21,7 @@ def init_firestore():
     except ValueError:
         pass
 
-    return firestore.client()
+    return fs.client()
 
 
 def init_twilio():
@@ -211,7 +211,7 @@ def save_outfit(firestore, user, outfit):
     bottom = outfit["bottom"]
 
     firestore.collection("outfits").add({
-        "ts": firestore.SERVER_TIMESTAMP,
+        "ts": fs.SERVER_TIMESTAMP,
         "top": top["id"],
         "bottom": bottom["id"],
         "user": user["id"],
