@@ -26,8 +26,8 @@ def init_firestore():
 
 def init_twilio():
     """Initialize Twilio client."""
-    account_sid = os.environ['TWILIO_ACCOUNT_SID']
-    auth_token = os.environ['TWILIO_AUTH_TOKEN']
+    account_sid = os.environ["TWILIO_ACCOUNT_SID"]
+    auth_token = os.environ["TWILIO_AUTH_TOKEN"]
     return TwilioClient(account_sid, auth_token)
 
 
@@ -83,7 +83,7 @@ def get_previous_outfits(firestore, user, n):
         - (dict): List of dictionary of outfit items.
     """
     n_days_ago = datetime.now() - timedelta(days=n)
-    query = firestore.collection('outfits').where('user', '==', user["id"]).where('ts', '>', n_days_ago)
+    query = firestore.collection("outfits").where("user", "==", user["id"]).where("ts", ">", n_days_ago)
     outfits = {doc.id: doc.to_dict() for doc in query.stream()}
 
     previous_outfits = []
@@ -236,7 +236,7 @@ def send_outfit_sms(twilio, user, outfit):
 
     twilio.messages.create(
         body=body,
-        from_=os.environ['TWILIO_FROM_NUMBER'],
+        from_=os.environ["TWILIO_FROM_NUMBER"],
         to=to)
 
 
