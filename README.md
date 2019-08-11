@@ -1,2 +1,2 @@
-# what_to_wear
+# What to wear?
 A service for picking out what to wear everyday.
