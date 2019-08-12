@@ -166,6 +166,35 @@ def pick_bottom(firestore, user):
     return random.choice(bottoms_for_selection)
 
 
+def pick_shoe(firestore, user):
+    """Pick shoes.
+
+    This function selects a random pair of shoes.
+
+    Example return value:
+    {
+        "id": "GJnQerscgmAhUp8SSB9h",
+        "description": "Green Sneakers",
+    }
+    Args:
+        - firestore (Firestore): Firestore instance.
+        - user (dict): Dictionary of user properties.
+    Returns:
+        - (dict): Dictionary of shoe properties.
+    """
+    query = firestore.collection("shoes").where("user", "==", user["id"]).where("enabled", "==", True)
+    shoes = {doc.id: doc.to_dict() for doc in query.stream()}
+
+    shoes_for_selection = []
+    for shoe_id, shoe_dict in shoes.items():
+        shoes_for_selection.append({
+            "id": shoe_id,
+            "description": shoe_dict["description"]
+        })
+
+    return random.choice(shoes_for_selection)
+
+
 def pick_outfit(firestore, user):
     """Pick an outfit.
 
@@ -190,10 +219,12 @@ def pick_outfit(firestore, user):
     """
     top = pick_top(firestore, user)
     bottom = pick_bottom(firestore, user)
+    shoe = pick_shoe(firestore, user)
 
     return {
         "top": top,
         "bottom": bottom,
+        "shoe": shoe,
     }
 
 
@@ -209,11 +240,13 @@ def save_outfit(firestore, user, outfit):
     """
     top = outfit["top"]
     bottom = outfit["bottom"]
+    shoe = outfit["shoe"]
 
     firestore.collection("outfits").add({
         "ts": fs.SERVER_TIMESTAMP,
         "top": top["id"],
         "bottom": bottom["id"],
+        "shoe": shoe["id"],
         "user": user["id"],
     })
 
@@ -230,8 +263,10 @@ def send_outfit_sms(twilio, user, outfit):
     """
     top = outfit["top"]
     bottom = outfit["bottom"]
-    body = "What to wear? {}, {}.".format(top["description"],
-                                          bottom["description"])
+    shoe = outfit["shoe"]
+    body = "What to wear? {}, {}, {}".format(top["description"],
+                                             bottom["description"],
+                                             shoe["description"])
     to = user["phone"]
 
     twilio.messages.create(
