@@ -80,7 +80,7 @@ def get_previous_outfits(firestore, user, n):
         - user (dict): Dictionary of user properties.
         - n (int): Number of days.
     Returns:
-        - (dict): List of dictionary of outfit items.
+        - (list): List of dictionary of outfit items.
     """
     n_days_ago = datetime.now() - timedelta(days=n)
     query = firestore.collection("outfits").where("user", "==", user["id"]).where("ts", ">", n_days_ago)
