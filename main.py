@@ -91,6 +91,7 @@ def get_previous_outfits(firestore, user, n):
         previous_outfits.append({
             "top_id": outfit_dict["top"],
             "bottom_id": outfit_dict["bottom"],
+            "shoe_id": outfit_dict.get("shoe"),
         })
 
     return previous_outfits
@@ -264,9 +265,9 @@ def send_outfit_sms(twilio, user, outfit):
     top = outfit["top"]
     bottom = outfit["bottom"]
     shoe = outfit["shoe"]
-    body = "What to wear? {}, {}, {}".format(top["description"],
-                                             bottom["description"],
-                                             shoe["description"])
+    body = "What to wear? {}, {}, {}.".format(top["description"],
+                                              bottom["description"],
+                                              shoe["description"])
     to = user["phone"]
 
     twilio.messages.create(
