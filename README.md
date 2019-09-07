@@ -54,7 +54,7 @@ A selection of top, bottom, and shoe.
 
 ## Deployment
 
-### Environemnt Variables
+### Environment Variables
 `TWILIO_ACCOUNT_SID`: Twilio account SID.  
 `TWILIO_AUTH_TOKEN`: Twilio auth token.  
 `TWILIO_FROM_NUMBER`: Twilio number to send SMS from.  
