@@ -1,8 +1,11 @@
-# What to wear?
-A service for picking out what to wear everyday.
+# What to Wear?
+Can't decide what to wear? Or maybe you forgot what you wore the other day and don't want to rewear the same thing? What to Wear? is a service for picking out what to wear everyday. Discover new outfits and wear your clothes more evenly!
+
+The service will send you an SMS message everyday (or configurable by day of the week).
+![What to Wear?](what_to_wear.jpg)
 
 ## Data Model
-Data are modeled as documents. The document types described below are displayed as JSON. However, the JSON field types can be translated to the appropriate type for a given document store.
+Data is modeled as documents. The document types described below are displayed as JSON. However, the JSON field types can be translated to an appropriate type for a given document store.
 
 ### users
 Users of the service.
@@ -56,6 +59,11 @@ A selection of top, bottom, and shoe.
 `TWILIO_AUTH_TOKEN`: Twilio auth token.  
 `TWILIO_FROM_NUMBER`: Twilio number to send SMS from.  
 
+### Google Cloud Firestore
+
 ### Google Cloud Functions
 
 ### Google Cloud Scheduler
+
+### Twilio
+Twilio is used to send SMS messages.
