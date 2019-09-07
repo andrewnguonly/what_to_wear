@@ -1,7 +1,7 @@
 # What to Wear?
-Can't decide what to wear? Or maybe you forgot what you wore the other day and don't want to rewear the same thing? What to Wear? is a service for picking out what to wear everyday. Discover new outfits and wear your clothes more evenly!
+Can't decide what to wear? Or maybe you forgot what you wore the other day and don't want to rewear the same thing? What to Wear? is a service for picking out what to wear everyday. Discover new outfits and wear your clothes more evenly!  
 
-The service will send you an SMS message everyday (or configurable by day of the week).
+The service will send you an SMS message everyday (or configurable by day of the week).  
 ![What to Wear?](what_to_wear.jpg)
 
 ## Data Model
