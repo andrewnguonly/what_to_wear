@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 
 import firebase_admin
 from firebase_admin import firestore as fs
+from retrying import retry
 from twilio.rest import Client as TwilioClient
 
 
@@ -252,6 +253,7 @@ def save_outfit(firestore, user, outfit):
     })
 
 
+@retry(stop_max_attempt_number=5, wait_fixed=2000)
 def send_outfit_sms(twilio, user, outfit):
     """Send outfit notification SMS via Twilio.
 
