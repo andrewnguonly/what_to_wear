@@ -2,16 +2,22 @@
 A service for picking out what to wear everyday.
 
 ## Data Model
+Data are modeled as documents. The document types described below are displayed as JSON. However, the JSON field types can be translated to the appropriate type for a given document store.
 
-#### users
+### users
 Users of the service.
 ```json
 {
-
+    "created_at": 1567891563,
+    "days": [true, true, true, true, true, false, false],
+    "enabled": true,
+    "first": "Andrew",
+    "last": "Nguonly",
+    "phone": "+18881234567"
 }
 ```
 
-#### tops
+### tops
 Shirts, sweaters, or whatever you wear on the top.
 ```json
 {
@@ -19,7 +25,7 @@ Shirts, sweaters, or whatever you wear on the top.
 }
 ```
 
-#### bottoms
+### bottoms
 Pants, shorts, or whatever you wear on the bottom.
 ```json
 {
@@ -27,7 +33,7 @@ Pants, shorts, or whatever you wear on the bottom.
 }
 ```
 
-#### shoes
+### shoes
 Sneakers, boots, or whatever you wear on the feet.
 ```json
 {
@@ -35,7 +41,7 @@ Sneakers, boots, or whatever you wear on the feet.
 }
 ```
 
-#### outfits
+### outfits
 A selection of top, bottom, and shoe.
 ```json
 {
@@ -45,11 +51,11 @@ A selection of top, bottom, and shoe.
 
 ## Deployment
 
-#### Environemnt Variables
-**TWILIO_ACCOUNT_SID**: Twilio account SID.  
-**TWILIO_AUTH_TOKEN**: Twilio auth token.  
-**TWILIO_FROM_NUMBER**: Twilio number to send SMS from.  
+### Environemnt Variables
+`TWILIO_ACCOUNT_SID`: Twilio account SID.  
+`TWILIO_AUTH_TOKEN`: Twilio auth token.  
+`TWILIO_FROM_NUMBER`: Twilio number to send SMS from.  
 
-#### Google Cloud Functions
+### Google Cloud Functions
 
-#### Google Cloud Scheduler
+### Google Cloud Scheduler
