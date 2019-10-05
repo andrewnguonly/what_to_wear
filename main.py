@@ -73,6 +73,7 @@ def get_previous_outfits(firestore, user, n):
         {
             "top_id": "030FsDn2FgJddUCRhsgN",
             "bottom_id": "6pDpD5aw99jl9Jp8cT3L",
+            "shoe_id": "0icIo29I5KOcGJsoe6O8",
         }
     ]
 
