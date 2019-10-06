@@ -17,7 +17,8 @@ Users of the service.
     "enabled": true,
     "first": "Andrew",
     "last": "Nguonly",
-    "phone": "+18881234567"
+    "phone": "+18881234567",
+    "enamil": "hello@world.com"
 }
 ```
 
