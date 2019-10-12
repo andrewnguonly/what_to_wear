@@ -89,7 +89,7 @@ Google Cloud Firestore is the document store used to back the service.
 Google Cloud Functions is the runtime which executes the entry point function `what_to_wear()` in `main.py`.
 
 ### Google Cloud Scheduler
-Google Cloud Scheduler is configured to trigger the Cloud Function everyday at 5am PST: `0 5 * * *`.
+Google Cloud Scheduler is configured to trigger the Cloud Function everyday at 5am PT: `0 5 * * *`.
 
 ### Twilio
 Twilio is used to send SMS messages.
