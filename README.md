@@ -18,7 +18,7 @@ Users of the service.
     "first": "Andrew",
     "last": "Nguonly",
     "phone": "+18881234567",
-    "enamil": "hello@world.com"
+    "email": "hello@world.com"
 }
 ```
 
