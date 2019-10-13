@@ -75,6 +75,18 @@ A selection of top, bottom, and shoe.
 }
 ```
 
+### unallowed_pairs
+A pair of top/bottom, bottom/shoe, top/shoe, etc. This pair cannot be selected in the same outfit.
+```json
+{
+    "user": "pgpa6ht0xrUaGyvnVycI",
+    "type_1": "bottom",
+    "id_1": "IostngqsEWa8BThQYsoS",
+    "type_2": "top",
+    "id_2": "8ilNYmsTHNEYtJbHAwRa"
+}
+```
+
 ## Deployment
 
 ### Environment Variables
