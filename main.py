@@ -99,6 +99,40 @@ def get_previous_outfits(firestore, user, n):
     return previous_outfits
 
 
+def get_unallowed_pairs(firestore, user):
+    """Return list of unallowed pairs.
+
+    Example return value:
+    [
+        {
+            "type_1": "bottom",
+            "id_1": "IostngqsEWa8BThQYsoS",
+            "type_2": "top",
+            "id_2": "8ilNYmsTHNEYtJbHAwRa",
+        }
+    ]
+
+    Args:
+        - firestore (Firestore): Firestore instance.
+        - user (dict): Dictionary of user properties.
+    Returns:
+        - (list): List of dictionary of unallowed pairs.
+    """
+    query = firestore.collection("unallowed_pairs").where("user", "==", user["id"])
+    pairs = {doc.id: doc.to_dict() for doc in query.stream()}
+
+    unallowed_pairs = []
+    for _, pair_dict in pairs.items():
+        unallowed_pairs.append({
+            "type_1": pair_dict["type_1"],
+            "id_1": pair_dict["id_1"],
+            "type_2": pair_dict["type_2"],
+            "id_2": pair_dict["id_2"],
+        })
+
+    return unallowed_pairs
+
+
 def pick_top(firestore, user):
     """Pick a top.
 
@@ -179,6 +213,7 @@ def pick_shoe(firestore, user):
         "id": "GJnQerscgmAhUp8SSB9h",
         "description": "Green Sneakers",
     }
+
     Args:
         - firestore (Firestore): Firestore instance.
         - user (dict): Dictionary of user properties.
@@ -198,6 +233,49 @@ def pick_shoe(firestore, user):
     return random.choice(shoes_for_selection)
 
 
+def valid_outfit(outfit, unallowed_pairs):
+    """Returns True if outfit does not contain unallowed pairs. Otherwise,
+    return False.
+
+    Example outfit:
+    {
+        "top": {
+            "id": "030FsDn2FgJddUCRhsgN",
+            "description": "Black Tee",
+        },
+        "bottom": {
+            "id": "6pDpD5aw99jl9Jp8cT3L",
+            "description": "Gray Shorts",
+        },
+        "shoe": {
+            "id": "GJnQerscgmAhUp8SSB9h",
+            "description": "Green Sneakers",
+        },
+    }
+
+    Example unallowed pair:
+    {
+        "type_1": "bottom",
+        "id_1": "IostngqsEWa8BThQYsoS",
+        "type_2": "top",
+        "id_2": "8ilNYmsTHNEYtJbHAwRa",
+    }
+
+    Args:
+        - outfit (dict): Dictionary of outfit items.
+        - unallowed_pairs (list): List of unallowed pairs (dicts).
+    Returns:
+        - (bool): True if outfit does not contain unallowed pairs. Otherwise,
+            return False.
+    """
+    for pair in unallowed_pairs:
+        if (outfit[pair["type_1"]]["id"] == pair["id_1"] and
+                outfit[pair["type_2"]]["id"] == pair["id_2"]):
+            return False
+
+    return True
+
+
 def pick_outfit(firestore, user):
     """Pick an outfit.
 
@@ -210,7 +288,11 @@ def pick_outfit(firestore, user):
         "bottom": {
             "id": "6pDpD5aw99jl9Jp8cT3L",
             "description": "Gray Shorts",
-        }
+        },
+        "shoe": {
+            "id": "GJnQerscgmAhUp8SSB9h",
+            "description": "Green Sneakers",
+        },
     }
 
     Args:
@@ -220,15 +302,18 @@ def pick_outfit(firestore, user):
     Returns:
         - (dict): Dictionary of outfit items.
     """
-    top = pick_top(firestore, user)
-    bottom = pick_bottom(firestore, user)
-    shoe = pick_shoe(firestore, user)
+    unallowed_pairs = get_unallowed_pairs(firestore, user)
 
-    return {
-        "top": top,
-        "bottom": bottom,
-        "shoe": shoe,
-    }
+    while True:
+        outfit = {
+            "top": pick_top(firestore, user),
+            "bottom": pick_bottom(firestore, user),
+            "shoe": pick_shoe(firestore, user),
+        }
+        if valid_outfit(outfit, unallowed_pairs):
+            break
+
+    return outfit
 
 
 def save_outfit(firestore, user, outfit):
